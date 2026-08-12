@@ -74,7 +74,10 @@ def ig_publish(url,caption):
     base=f"https://graph.instagram.com/v21.0/{IG_ID}"
     def post(path,**p):
         p["access_token"]=IG_TOKEN
-        return json.load(urllib.request.urlopen(urllib.request.Request(base+path,data=urllib.parse.urlencode(p).encode()),timeout=90))
+        try:
+            return json.load(urllib.request.urlopen(urllib.request.Request(base+path,data=urllib.parse.urlencode(p).encode()),timeout=90))
+        except urllib.error.HTTPError as e:
+            raise RuntimeError(f"[{path}] " + e.read().decode()[:350])
     cont=post("/media",image_url=url,caption=caption)
     return post("/media_publish",creation_id=cont["id"])
 def publish(p):
