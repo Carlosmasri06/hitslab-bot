@@ -2,7 +2,7 @@ name: HITS LAB Bot
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '0 15 * * *'
 jobs:
   run:
     runs-on: ubuntu-latest
